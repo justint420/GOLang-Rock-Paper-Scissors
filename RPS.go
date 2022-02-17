@@ -1,5 +1,5 @@
 // Rock Paper Scissors by Justin
-// The can be played 5 times before ending
+// The game can be played 5 times before ending
 
 package main
 
