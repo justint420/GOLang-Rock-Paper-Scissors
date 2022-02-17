@@ -1,3 +1,6 @@
+// Rock Paper Scissors by Justin
+// The can be played 5 times before ending
+
 package main
 
 import (
@@ -7,34 +10,28 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 var possibleoptions = []string{"Rock", "Paper", "Scissors"}
 
 func main() {
-	username()
-	rockpaperscissors()
-}
 
-func username() {
-	// Seed to randomize the computer choice
-	rand.Seed(time.Now().UnixNano())
+	timesplayed := 0
+	for timesplayed <= 4 {
+		if timesplayed == 4 {
+			color.Yellow("This will be your last turn.")
+		}
+		if timesplayed <= 4 {
+			rockpaperscissors()
 
-	// Instructs the user to enter their name
-	fmt.Println("Enter Your Name")
-
-	// Welcome Text
-	welcometext := "\n welcome to Rock, Paper, Scissors"
-
-	// Reads the User's Name from Console
-	nameinput := bufio.NewReader(os.Stdin)
-
-	// Sets the name variable based on user input
-	name, _ := nameinput.ReadString('\n')
-
-	// Appends the name to the welcome text and prints to console
-	name += welcometext
-	fmt.Println(name)
+			if timesplayed == 5 {
+				color.Blue("Thank you for Playing." + "\n")
+			}
+		}
+		timesplayed++
+	}
 }
 
 func rockpaperscissors() {
@@ -44,42 +41,44 @@ func rockpaperscissors() {
 	userchoice, _ := choiceinput.ReadString('\n')
 
 	// Computer choice
+	// Seed to randomize the computer choice
+	rand.Seed(time.Now().UnixNano())
 	computerchoice := possibleoptions[rand.Intn(len(possibleoptions))]
 
 	// Prints the Choices to Screen
-	fmt.Println("Your choice is: " + userchoice)
-	fmt.Println("The computer choice is: " + computerchoice)
+	color.Cyan("Your choice is: " + userchoice + "\n")
+	color.Magenta("The computer choice is: " + computerchoice + "\n")
 
 	// Check for Tie
 	if strings.TrimRight(userchoice, "\n") == computerchoice {
-		fmt.Println("It's a tie!")
+		color.Yellow("It's a tie!" + "\n")
 	}
 
 	// Calculate Winner
 	if strings.TrimRight(userchoice, "\n") == "Rock" {
 		if computerchoice == "Paper" {
-			fmt.Println("Paper covers rock...computer wins!")
+			color.Red("Paper covers rock...computer wins!" + "\n")
 		}
 		if computerchoice == "Scissors" {
-			fmt.Println("Rock crushes scissors...user wins!")
+			color.Green("Rock crushes scissors...user wins!" + "\n")
 		}
 	}
 
 	if strings.TrimRight(userchoice, "\n") == "Paper" {
 		if computerchoice == "Scissors" {
-			fmt.Println("Scissors cuts paper...computer wins!")
+			color.Red("Scissors cuts paper...computer wins!" + "\n")
 		}
 		if computerchoice == "Rock" {
-			fmt.Println("Paper covers rock...user wins!")
+			color.Green("Paper covers rock...user wins!" + "\n")
 		}
 	}
 
 	if strings.TrimRight(userchoice, "\n") == "Scissors" {
 		if computerchoice == "Rock" {
-			fmt.Println("Rock crushes scissors...computer wins!")
+			color.Red("Rock crushes scissors...computer wins!" + "\n")
 		}
 		if computerchoice == "Paper" {
-			fmt.Println("Scissors cuts paper...user wins!")
+			color.Green("Scissors cuts paper...user wins!" + "\n")
 		}
 	}
 }
